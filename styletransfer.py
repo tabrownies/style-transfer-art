@@ -37,6 +37,11 @@ def imshow(tensor, title=None):
     if title is not None:
         plt.title(title)
     plt.pause(0.001) # pause a bit so that plots are updated
+def imsave(tensor, path):
+    image = tensor.cpu().clone()
+    image = tensor.squeeze(0)
+    image = unloader(image)
+    image.save(path)
 
 class ContentLoss(nn.Module):
 
@@ -251,6 +256,7 @@ def style_transfer(style_img_path, content_img_path, display=False):
         # sphinx_gallery_thumbnail_number = 4
         plt.ioff()
         plt.show()
+    return output
 
 if __name__ == '__main__':
     style_transfer("./images/picasso.jpg","./images/dancing.jpg", True)
